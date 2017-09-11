@@ -10,9 +10,9 @@ app.get("/",function(req,res){
 })
 
 //书本信息
-app.get('/books/:id',function(req,res){
+app.get('/book/:id',function(req,res){
 	var id = req.params.id;
-	query(`select * from books WHERE bookId=${id}`,(err, rows) => {
+	query(`select * from booklist WHERE bookId=${id}`,(err, rows) => {
 	    res.json({data:rows[0],success:true})
 	})
 })
@@ -48,10 +48,12 @@ app.get('/books',function(req,res){
 	var id = req.query.id;
 	var chapter = req.query.chapter;
 	if(chapter){
+		//章节内容
 		query(`select * from books WHERE bookId=${id} and chapterId=${chapter}`,(err, rows) => {
 		    res.json({data:rows,success:true})
 		})
 	}else{
+		//书本章节
 		query(`select * from books WHERE bookId=${id} ORDER BY chapterId ASC`,(err, rows) => {
 		    res.json({data:rows,success:true})
 		})
